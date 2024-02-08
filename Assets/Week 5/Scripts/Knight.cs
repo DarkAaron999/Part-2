@@ -14,6 +14,7 @@ public class Knight : MonoBehaviour
     public float health;
     public float maxHealth = 5;
     bool isDead = false;
+    bool isAttacking = false;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -41,6 +42,11 @@ public class Knight : MonoBehaviour
             destination = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
         animator.SetFloat("Movement", movement.magnitude);
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            SendMessage("Attack");
+        }
     }
     private void OnMouseDown()
     {
@@ -61,6 +67,7 @@ public class Knight : MonoBehaviour
         {
             //dead
             isDead = true;
+            isAttacking = false;
             animator.SetTrigger("Death");
         }
         else
@@ -68,5 +75,11 @@ public class Knight : MonoBehaviour
             isDead = false;
             animator.SetTrigger("TakeDamage");
         }
+    }
+
+    public void Attack()
+    {
+        isAttacking = true;
+        animator.SetTrigger("Attack");
     }
 }

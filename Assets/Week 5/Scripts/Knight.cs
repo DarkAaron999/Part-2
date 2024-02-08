@@ -69,11 +69,15 @@ public class Knight : MonoBehaviour
             isDead = true;
             isAttacking = false;
             animator.SetTrigger("Death");
+            //To stop the repeating of taking damage animation by turning off the collider
+            GetComponent<Collider2D>().enabled = false;
         }
         else
         {
             isDead = false;
             animator.SetTrigger("TakeDamage");
+            //To turn the collider back on so the taking damage animation works
+            GetComponent<Collider2D>().enabled = true;
         }
     }
 

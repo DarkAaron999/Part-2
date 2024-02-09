@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Plane : MonoBehaviour
 {
@@ -14,6 +16,9 @@ public class Plane : MonoBehaviour
     public float speed = 1;
     public AnimationCurve landing;
     public float landingTimer;
+    public float minValue = -5f;
+    public float maxValue = 5f;
+    public Sprite[] spriteArray;
 
     private void Start()
     {
@@ -22,6 +27,18 @@ public class Plane : MonoBehaviour
         lineRenderer.SetPosition(0, transform.position);
 
         rigidbody = GetComponent<Rigidbody2D>();
+
+        Random.Range(minValue, maxValue);
+
+        Vector2 direction = new Vector3(Random.Range(minValue,maxValue), Random.Range(minValue, maxValue), 0f);
+        transform.position = direction;
+
+        transform.rotation = Quaternion.Euler (0, 0, Random.Range(minValue, maxValue));
+
+        speed = Random.Range(1, 3);
+
+        var renderer = GetComponent<SpriteRenderer>();
+        renderer.sprite = spriteArray[Random.Range(1, spriteArray.Length)];
     }
     private void FixedUpdate()
     {

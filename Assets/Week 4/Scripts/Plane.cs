@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.FilePathAttribute;
 
 public class Plane : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class Plane : MonoBehaviour
     public float minValue = -5f;
     public float maxValue = 5f;
     public Sprite[] spriteArray;
+    public Color inDangerZoneColor;
+    public Color outDangerZoneColor;
+    SpriteRenderer spriteRenderer;
 
     private void Start()
     {
@@ -33,16 +37,23 @@ public class Plane : MonoBehaviour
         Vector2 direction = new Vector3(Random.Range(minValue,maxValue), Random.Range(minValue, maxValue), 0f);
         transform.position = direction;
 
-        transform.rotation = Quaternion.Euler (0, 0, Random.Range(minValue, maxValue));
+        transform.rotation = Quaternion.Euler (0f, 0f, Random.Range(minValue, maxValue));
 
-        speed = Random.Range(1, 3);
+        speed = Random.Range(1f, 3f);
 
         var renderer = GetComponent<SpriteRenderer>();
         renderer.sprite = spriteArray[Random.Range(1, spriteArray.Length)];
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.color = outDangerZoneColor;
+
+
     }
+
     private void FixedUpdate()
     {
         currentPosition = transform.position;
+        
         if(points.Count > 0 )
         {
             Vector2 direction = points[0] - currentPosition;
@@ -97,6 +108,33 @@ public class Plane : MonoBehaviour
             lineRenderer.positionCount++;
             lineRenderer.SetPosition(lineRenderer.positionCount - 1, newPosition);
             lastPosition = newPosition;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //Debug.Log(" In danger zone: " + collision.gameObject);
+        spriteRenderer.color = inDangerZoneColor;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        //Debug.Log(" Out danger zone: " + collision.gameObject);
+        spriteRenderer.color = outDangerZoneColor;
+    }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        float dist = Vector3.Distance(currentPosition, transform.position);
+        if (dist < 1f)
+        {
+            spriteRenderer.color = inDangerZoneColor;
+            Debug.Log(" distance: " + dist);
         }
     }
 }

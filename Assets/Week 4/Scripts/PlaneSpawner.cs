@@ -10,20 +10,14 @@ public class PlaneSpawner : MonoBehaviour
     public GameObject planePrefab;
     public float timerValue = 0f;
     public float timerTraget = 5f;
-    // Start is called before the first frame update
-    void Start()
-    {
-  
-    }
 
-    // Update is called once per frame
     void Update()
     {
         timerValue += 1f * Time.deltaTime;
         if (timerValue > timerTraget)
         {
             Instantiate(planePrefab);
-            timerValue = 0f;
+            timerValue = Random.Range(1f, 5f);
         }
     }
 }

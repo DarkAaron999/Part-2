@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4849783392704769985}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Plane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85,7 +85,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3c91ca5ea46cd97409cdc7acb86e3523, type: 3}
   inDangerZoneColor: {r: 0.764151, g: 0.111739054, b: 0.111739054, a: 1}
   outDangerZoneColor: {r: 1, g: 1, b: 1, a: 1}
-  plane: {fileID: 6413085746300013841}
+  score: {fileID: 0}
 --- !u!212 &6833140618640609854
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -126,7 +126,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: c73a14ae579ec794db786a6cb7b74e20, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -303,4 +303,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 1.5

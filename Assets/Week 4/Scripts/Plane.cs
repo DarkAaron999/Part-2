@@ -23,6 +23,8 @@ public class Plane : MonoBehaviour
     public Color inDangerZoneColor;
     public Color outDangerZoneColor;
     SpriteRenderer spriteRenderer;
+    bool isLanding = false;
+    public PlayerScore score;
 
     private void Start()
     {
@@ -47,7 +49,7 @@ public class Plane : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.color = outDangerZoneColor;
 
-
+        score = GameObject.FindGameObjectWithTag("Score").GetComponent<PlayerScore>();
     }
 
     private void FixedUpdate()
@@ -65,13 +67,14 @@ public class Plane : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKey(KeyCode.Space))
+        if (isLanding)
         {
             landingTimer += 0.5f * Time.deltaTime;
             float interpolation = landing.Evaluate(landingTimer);
             if (transform.localScale.z < 0.1f)
             {
                 Destroy(gameObject);
+                score.addScore();
             }
             transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, interpolation);
         }
@@ -111,16 +114,13 @@ public class Plane : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //Debug.Log(" In danger zone: " + collision.gameObject);
-        spriteRenderer.color = inDangerZoneColor;
-    }
-
     private void OnTriggerExit2D(Collider2D collision)
     {
-        //Debug.Log(" Out danger zone: " + collision.gameObject);
-        spriteRenderer.color = outDangerZoneColor;
+        if (collision.CompareTag("Plane"))
+        {
+            Debug.Log("Out danger zone: " + collision.gameObject);
+            spriteRenderer.color = outDangerZoneColor;
+        }
     }
 
     private void OnBecameInvisible()
@@ -130,11 +130,34 @@ public class Plane : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        float dist = Vector3.Distance(currentPosition, transform.position);
-        if (dist < 1f)
+        if (collision.CompareTag("Runway"))
         {
-            spriteRenderer.color = inDangerZoneColor;
-            Debug.Log(" distance: " + dist);
+            if (collision.OverlapPoint(transform.position))
+            {
+                isLanding = true;
+            }
+            else
+            {
+                isLanding = false;
+            }
         }
+        else
+        {
+            float dist = Vector3.Distance(currentPosition, collision.transform.position);
+            if (dist < 1.5f)
+            {
+                spriteRenderer.color = inDangerZoneColor;
+                Debug.Log(" distance: " + dist);
+
+
+                if (dist < 0.5f)
+                {
+                    Destroy(gameObject);
+                    Destroy(collision.gameObject);
+                    Debug.Log("dead");
+                }
+            }
+        }
+
     }
 }

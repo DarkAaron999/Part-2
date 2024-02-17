@@ -70,8 +70,6 @@ public class Knight : MonoBehaviour
         health -= damage;
         health = Mathf.Clamp(health, 0, maxHealth);
 
-        
-        
         PlayerPrefs.SetFloat("health", health);
 
         if (health == 0)

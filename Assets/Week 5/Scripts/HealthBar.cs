@@ -7,8 +7,7 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     public Slider slider;
-
-    void Start()
+    private void Update()
     {
         slider.value = PlayerPrefs.GetFloat("health");
     }

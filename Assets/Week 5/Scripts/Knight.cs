@@ -95,10 +95,4 @@ public class Knight : MonoBehaviour
         isAttacking = true;
         animator.SetTrigger("Attack");
     }
-
-    public void updateHealthUi()
-    {
-        SendMessage("health", healthBar.slider, SendMessageOptions.DontRequireReceiver);
-        Debug.Log("test");
-    }
 }

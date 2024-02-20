@@ -17,6 +17,8 @@ public class MissileStation : MonoBehaviour
     bool isHealing = false;
     bool isDead = false;
     bool isShooting = false;
+    public GameObject missilePrefab;
+    public Transform missileSpawner;
     // Start is called before the first frame update
     void Start()
     {
@@ -58,8 +60,16 @@ public class MissileStation : MonoBehaviour
 
     public void Shooting()
     {
-        isShooting = true;
-        animator.SetTrigger("Shooting");
+        if (money >= 100)
+        {
+            isShooting = true;
+            animator.SetTrigger("Shooting");
+
+            Instantiate(missilePrefab, missileSpawner.position, missileSpawner.rotation);
+
+            money -= 100;
+            moneyText.text = money.ToString();
+        }
     }
 
     public void Heal(float heal)

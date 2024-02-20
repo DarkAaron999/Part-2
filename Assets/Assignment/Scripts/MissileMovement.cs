@@ -11,12 +11,11 @@ public class MissileMovement : MonoBehaviour
     public float newPositionThreshold = 0.2f;
     Vector2 lastPosition;
     LineRenderer lineRenderer;
-    Vector2 currentPosition;
     Rigidbody2D rb;
-    public float speed = 1;
+    public float speed = 2;
     public AnimationCurve exploding;
-    public float explodingTimer;
     bool isExploding = false;
+    Vector2 missilePosition;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,16 +23,16 @@ public class MissileMovement : MonoBehaviour
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, transform.position);
 
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>(); 
     }
 
     private void FixedUpdate()
     {
-        currentPosition = transform.position;
+        missilePosition = transform.position;
 
         if (points.Count > 0)
         {
-            Vector2 direction = points[0] - currentPosition;
+            Vector2 direction = points[0] - missilePosition;
             float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
             rb.rotation = -angle;
         }
@@ -42,21 +41,10 @@ public class MissileMovement : MonoBehaviour
 
     private void Update()
     {
-        if (isExploding)
-        {
-            explodingTimer += 0.5f * Time.deltaTime;
-            float interpolation = exploding.Evaluate(explodingTimer);
-            if (transform.localScale.z < 0.1f)
-            {
-                Destroy(gameObject);
-            }
-            transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, interpolation);
-        }
-
         lineRenderer.SetPosition(0, transform.position);
         if (points.Count > 0)
         {
-            if (Vector2.Distance(currentPosition, points[0]) < newPositionThreshold)
+            if (Vector2.Distance(missilePosition, points[0]) < newPositionThreshold)
             {
                 points.RemoveAt(0);
 
@@ -83,6 +71,24 @@ public class MissileMovement : MonoBehaviour
             lineRenderer.positionCount++;
             lineRenderer.SetPosition(lineRenderer.positionCount - 1, newPosition);
             lastPosition = newPosition;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        float dist = Vector3.Distance(missilePosition, collision.transform.position);
+
+        if (collision.CompareTag("Enemy"))
+        {
+            Debug.Log(" distance: " + dist);
+
+            if (dist < 0.7f)
+            {
+                isExploding = true;
+
+                Destroy(gameObject);
+                collision.gameObject.SendMessage("EnemyTakeDamage", 1, SendMessageOptions.DontRequireReceiver);
+            }
         }
     }
 }

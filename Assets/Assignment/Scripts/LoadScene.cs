@@ -19,10 +19,6 @@ public class LoadScene : MonoBehaviour
     {
         SceneManager.LoadScene("Game");
     }
-    public void LoadSceneGameOver()
-    {
-        SceneManager.LoadScene("GameOver");
-    }
     public void LoadSceneVictroy()
     {
         SceneManager.LoadScene("Victroy");

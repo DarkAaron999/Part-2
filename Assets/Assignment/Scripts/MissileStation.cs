@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MissileStation : MonoBehaviour
 {
@@ -26,12 +27,15 @@ public class MissileStation : MonoBehaviour
         animator = GetComponent<Animator>();
 
         health = maxHealth;
-        money = 0;
+        money = 250;
+        moneyText.text = money.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isDead) return;
+
         if (Input.GetMouseButtonDown(1))
         {
             money += 100;
@@ -41,6 +45,9 @@ public class MissileStation : MonoBehaviour
 
     public void PlayerTakeDamage(float damage)
     {
+        health -= damage;
+        health = Mathf.Clamp(health, 0, maxHealth);
+
         if (health < 5)
         {
             isHurting = true;
@@ -51,6 +58,9 @@ public class MissileStation : MonoBehaviour
         {
             isDead = true;
             animator.SetTrigger("Death");
+
+            Destroy(gameObject);
+            SceneManager.LoadScene("GameOver");
         }
         else
         {

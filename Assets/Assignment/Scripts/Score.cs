@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class Score : MonoBehaviour
 {
+    //Referening: Used some of the same code in the in class assignemnts
     //Reference for player score
     public int playerScore;
     //Reference for player highscore

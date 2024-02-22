@@ -8,6 +8,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class Enemy : MonoBehaviour
 {
+    //Referening: Used some of the same code in the in class assignemnts
     //Reference for the rigidbody
     Rigidbody2D rb;
     //Reference for the animator

@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PlayerHealthBar : MonoBehaviour
 {
+    //Referening: Used some of the same code in the in class assignemnts
     //Reference for slider
     public Slider slider;
 

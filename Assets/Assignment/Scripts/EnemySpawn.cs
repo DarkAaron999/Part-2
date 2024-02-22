@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class EnemySpawn : MonoBehaviour
 {
+    //Referening: Used some of the same code in the in class assignemnts
     //Reference for enemy prefab
     public GameObject enemyPrefab;
     //Reference for enemy spawn point

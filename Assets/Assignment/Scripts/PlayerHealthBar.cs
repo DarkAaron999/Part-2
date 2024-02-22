@@ -6,13 +6,18 @@ using UnityEngine;
 
 public class PlayerHealthBar : MonoBehaviour
 {
+    //Reference for slider
     public Slider slider;
+
+    //Function for player take damage
     public void PlayerTakeDamage(float damage)
     {
+        //Makes the slier sclae small based on the player health when it goes down  
         slider.value -= damage;
     }
     public void Heal(float heal)
     {
+        //Makes the slider scale bigger based on the player health when it goes up
         slider.value += heal;
     }
 }

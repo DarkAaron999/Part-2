@@ -10,6 +10,7 @@ TagManager:
   - MissileStation
   - Missile
   - Enemy
+  - PlayerScore
   layers:
   - Default
   - TransparentFX

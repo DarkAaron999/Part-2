@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Controller : MonoBehaviour
 {
@@ -9,9 +10,9 @@ public class Controller : MonoBehaviour
     float chargerValue;
     public float maxCharge = 1;
     Vector2 direction;
-    public int score;
-
-    public static Ball Score { get; private set; }
+    public TextMeshProUGUI scoreUI;
+   
+    public static int score;
     public static FootballPlayer SelectedPlayer { get; private set; }   
 
     public static void SetSelectedPlayer(FootballPlayer player)
@@ -24,9 +25,15 @@ public class Controller : MonoBehaviour
         SelectedPlayer.Selected(true);
     }
 
-    public static void SetScore(Ball ball)
+    public static void addSocre(int addToScore)
     {
-        
+        score = score + (addToScore);
+        Debug.Log(score);
+    }
+
+    private void Start()
+    {
+        score = 0;
     }
 
     private void FixedUpdate()
@@ -38,6 +45,8 @@ public class Controller : MonoBehaviour
             chargerValue = 0;
             chargeSlider.value = chargerValue;
         }
+
+        scoreUI.text = score.ToString();
     }
 
     private void Update()

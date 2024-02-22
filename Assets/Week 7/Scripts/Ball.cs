@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    Transform kickoffPosition;
+    Vector2 kickoffPosition;
     Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        kickoffPosition = gameObject.transform.position;
     }
 
     // Update is called once per frame
@@ -22,9 +24,12 @@ public class Ball : MonoBehaviour
     {
         if (collision.CompareTag("Goal"))
         {
-            Controller.SetScore(this);
+            Controller.addSocre(1);
             
+            transform.position = kickoffPosition;
+
             rb.velocity = Vector3.zero;
+            
         }
     }
 }

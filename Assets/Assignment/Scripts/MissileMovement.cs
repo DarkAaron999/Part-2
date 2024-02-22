@@ -139,4 +139,10 @@ public class MissileMovement : MonoBehaviour
             }
         }
     }
+    //Function for when gameobject leaves screen veiw
+    private void OnBecameInvisible()
+    {
+        //Destroy this gameobject
+        Destroy(gameObject);
+    }
 }

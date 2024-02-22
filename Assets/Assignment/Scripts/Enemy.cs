@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using Unity.VisualScripting;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Enemy : MonoBehaviour
 {
@@ -14,10 +14,16 @@ public class Enemy : MonoBehaviour
     public float maxHealth = 2;
     bool isHurting = false;
     bool isDead = false;
+    bool isCloser = false;
     public float speed = 1f;
     public Transform traget;
     Vector2 enemyPosition;
+    Vector2 playerPosition;
     public MissileStation missileStation;
+    public AnimationCurve enemyTraveling;
+    public float travelTimer;
+    public float destroyTimer;
+    public Score score;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,11 +36,17 @@ public class Enemy : MonoBehaviour
     private void FixedUpdate()
     {
         enemyPosition = transform.position;
+
+        playerPosition = traget.position;
+
+        destroyTimer +=  Time.deltaTime;
+        float interpolation = enemyTraveling.Evaluate(destroyTimer);
+        transform.position = Vector3.Lerp(enemyPosition, playerPosition, interpolation / travelTimer * Time.deltaTime);
     }
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector2.MoveTowards(transform.position, traget.position, speed * Time.deltaTime);
+        if (isDead) return;
     }
 
     public void EnemyTakeDamage(float damage)
@@ -55,7 +67,11 @@ public class Enemy : MonoBehaviour
 
             missileStation.money += 200;
             missileStation.moneyText.text = missileStation.money.ToString();
+
+            score.addScore();
+
             Destroy(gameObject);
+
         }
         else
         {

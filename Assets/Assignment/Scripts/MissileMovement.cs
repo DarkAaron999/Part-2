@@ -13,7 +13,6 @@ public class MissileMovement : MonoBehaviour
     LineRenderer lineRenderer;
     Rigidbody2D rb;
     public float speed = 2;
-    public AnimationCurve exploding;
     bool isExploding = false;
     Vector2 missilePosition;
     // Start is called before the first frame update
@@ -41,6 +40,8 @@ public class MissileMovement : MonoBehaviour
 
     private void Update()
     {
+        if (isExploding) return;
+
         lineRenderer.SetPosition(0, transform.position);
         if (points.Count > 0)
         {

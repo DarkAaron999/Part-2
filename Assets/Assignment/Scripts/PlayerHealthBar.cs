@@ -11,4 +11,8 @@ public class PlayerHealthBar : MonoBehaviour
     {
         slider.value -= damage;
     }
+    public void Heal(float heal)
+    {
+        slider.value += heal;
+    }
 }

@@ -57,6 +57,9 @@ public class MissileStation : MonoBehaviour
         if (health == 0)
         {
             isDead = true;
+            isHealing = false;
+            isShooting = false;
+            isHurting = false;
             animator.SetTrigger("Death");
 
             Destroy(gameObject);

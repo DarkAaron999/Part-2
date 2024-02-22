@@ -19,10 +19,6 @@ public class LoadScene : MonoBehaviour
     {
         SceneManager.LoadScene("Game");
     }
-    public void LoadSceneVictroy()
-    {
-        SceneManager.LoadScene("Victroy");
-    }
     public void Quit()
     {
         Application.Quit();

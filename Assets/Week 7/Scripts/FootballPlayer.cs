@@ -7,7 +7,7 @@ public class FootballPlayer : MonoBehaviour
 {
     bool clickingOnSelf = false;
     Rigidbody2D rb;
-    public SpriteRenderer sr;
+    SpriteRenderer sr;
     public Color selectedColor;
     public Color unSelectedColor;
     // Start is called before the first frame update
@@ -26,7 +26,7 @@ public class FootballPlayer : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        Selected(true);
+        Controller.SetSelectedPlayer(this);
     }
 
     public void Selected(bool isSelected)
@@ -35,9 +35,9 @@ public class FootballPlayer : MonoBehaviour
         {
              sr.color = selectedColor;
         }
-        if (isSelected)
+        else
         {
-
+            sr.color = unSelectedColor;
         }
     }
 }

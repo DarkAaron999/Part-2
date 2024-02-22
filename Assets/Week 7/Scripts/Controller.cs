@@ -9,8 +9,10 @@ public class Controller : MonoBehaviour
     float chargerValue;
     public float maxCharge = 1;
     Vector2 direction;
+    public int score;
 
-   public static FootballPlayer SelectedPlayer { get; private set; }
+    public static Ball Score { get; private set; }
+    public static FootballPlayer SelectedPlayer { get; private set; }   
 
     public static void SetSelectedPlayer(FootballPlayer player)
     {
@@ -20,6 +22,11 @@ public class Controller : MonoBehaviour
         }
         SelectedPlayer = player;
         SelectedPlayer.Selected(true);
+    }
+
+    public static void SetScore(Ball ball)
+    {
+        
     }
 
     private void FixedUpdate()

@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9623f9a70d992b845850486d12b054f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sr: {fileID: 3685671408441312727}
+  speed: 1000
   selectedColor: {r: 0.7830189, g: 0.19575472, b: 0.19575472, a: 1}
   unSelectedColor: {r: 0.50980395, g: 0, b: 0, a: 1}
 --- !u!212 &3685671408441312727

@@ -8,6 +8,7 @@ public class FootballPlayer : MonoBehaviour
     bool clickingOnSelf = false;
     Rigidbody2D rb;
     SpriteRenderer sr;
+    public float speed = 100;
     public Color selectedColor;
     public Color unSelectedColor;
     // Start is called before the first frame update
@@ -39,5 +40,10 @@ public class FootballPlayer : MonoBehaviour
         {
             sr.color = unSelectedColor;
         }
+    }
+
+    public void Move(Vector2 direction)
+    {
+        rb.AddForce(direction * speed);
     }
 }
